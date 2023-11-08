@@ -12,6 +12,7 @@ class Ball:
 
     def draw(self):
         self.image.draw(self.x, self.y)
+        draw_rectangle(*self.get_bb()) # 바운딩 박스 그려줌
 
     def update(self):
         self.x += self.velocity * 100 * game_framework.frame_time
@@ -20,3 +21,12 @@ class Ball:
             game_world.remove_object(self)
 
     # fill here
+    def get_bb(self):
+        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
+
+
+    def handle_collision(self, group, other):
+        if group == 'boy:ball':
+            game_world.remove_object(self)
+        if group == 'zombie:ball':
+            game_world.remove_object(self)
